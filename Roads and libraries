@@ -1,0 +1,58 @@
+# include <bits/stdc++.h>
+using namespace std;
+ 
+long long int ctr2 = 0;
+ 
+void dfs(int i, vector <int> e[], bool vis[]){
+// vis[i] = true;
+// ctr2++;
+
+for (int j = 0; j < e[i].size(); j++){
+int x = e[i][j];
+if (!vis[x]){
+vis[x] = true;
+ctr2++;
+dfs(x,e,vis);
+}
+}
+}
+int main(){
+int q;
+cin>>q;
+
+while (q--){
+long long int n, m, c_lib, c_rd;
+cin>>n>>m>>c_lib>>c_rd;
+
+vector<int> e[n+10];
+
+for (int i = 0; i < m; i++){
+int a, b;
+cin>>a>>b;
+e[a].push_back(b);
+e[b].push_back(a);
+}
+
+if (c_lib <= c_rd){
+cout<<n*c_lib<<endl;
+continue;
+}
+
+bool vis[n+10];
+memset(vis, false, sizeof(vis));
+//int ctr1 = 0;
+long long int ans = 0;
+
+for (int i = 1; i <= n; i++){
+ctr2 = 0;
+if (!vis[i]){
+ctr2++;
+vis[i] = true;
+dfs(i,e,vis);
+ans = ans + c_lib + c_rd*(ctr2-1);
+}
+}
+cout<<ans<<endl;
+}
+return 0;
+}
